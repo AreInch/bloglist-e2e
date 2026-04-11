@@ -16,18 +16,18 @@ test.describe("Blog app", () => {
 
 
   test("Login succeeds with correct credentials", async ({ page }) => {
-    await page.click("text=login")
-    await page.fill('input[placeholder="username"]', "test")
-    await page.fill('input[placeholder="password"]', "test")
+    await page.click("text=Login")
+    await page.locator('input').first().fill('test')
+    await page.locator('input').last().fill('test')
     await page.getByRole('button', { name: 'login' }).click();
 
     await expect(page.locator("text=test logged in")).toBeVisible()
   })
 
   test("Login fails with wrong credentials", async ({ page }) => {
-    await page.click("text=login")
-    await page.fill('input[placeholder="username"]', "wronguser")
-    await page.fill('input[placeholder="password"]', "wrongpass")
+    await page.click("text=Login")
+    await page.locator('input').first().fill('wronguser')
+    await page.locator('input').last().fill('wrongpass')
     await page.click("button[type=submit]")
 
     await expect(page.locator("text=wrong username or password")).toBeVisible()
@@ -35,24 +35,24 @@ test.describe("Blog app", () => {
   })
 
   test("Logged-in user can create a blog", async ({ page }) => {
-    await page.click("text=login")
-    await page.fill('input[placeholder="username"]', "test")
-    await page.fill('input[placeholder="password"]', "test")
+    await page.click("text=Login")
+    await page.locator('input').first().fill('test')
+    await page.locator('input').last().fill('test')
     await page.getByRole('button', { name: 'login' }).click();
 
-    await page.click("text=create")
-    await page.fill('input[placeholder="title"]', "Playwright Blog")
-    await page.fill('input[placeholder="author"]', "Tester")
-    await page.fill('input[placeholder="url"]', "http://playwright.dev")
+    await page.click("text=Create")
+    await page.locator('input').nth(0).fill('Playwright Blog')
+    await page.locator('input').nth(1).fill('Tester')
+    await page.locator('input').nth(2).fill('http://playwright.dev')
     await page.click("button.create-button")
 
     await expect(page.locator("text=Playwright Blog Tester")).toBeVisible()
   })
 
   test("Logged-in user can like blogs", async ({ page }) => {
-    await page.click("text=login")
-    await page.fill('input[placeholder="username"]', "test")
-    await page.fill('input[placeholder="password"]', "test")
+    await page.click("text=Login")
+    await page.locator('input').first().fill('test')
+    await page.locator('input').last().fill('test')
     await page.getByRole('button', { name: 'login' }).click();
 
     await page.click("text=Playwright Blog Tester")
@@ -66,9 +66,9 @@ test.describe("Blog app", () => {
   })
 
   test("Logged-in user can delete a blog", async ({ page }) => {
-    await page.click("text=login")
-    await page.fill('input[placeholder="username"]', "test")
-    await page.fill('input[placeholder="password"]', "test")
+    await page.click("text=Login")
+    await page.locator('input').first().fill('test')
+    await page.locator('input').last().fill('test')
     await page.getByRole('button', { name: 'login' }).click();
 
     await page.click("text=Playwright Blog Tester")
